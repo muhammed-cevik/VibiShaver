@@ -12,39 +12,42 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 Calculating task graph as no cached configuration is available for tasks: assembleDebug
 > Task :app:preBuild UP-TO-DATE
 > Task :app:preDebugBuild UP-TO-DATE
-> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
 > Task :app:checkKotlinGradlePluginConfigurationErrors
-> Task :app:createDebugCompatibleScreenManifests
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
 > Task :app:generateDebugResValues
-> Task :app:javaPreCompileDebug
-> Task :app:mergeDebugShaders
-> Task :app:extractDeepLinksDebug
+> Task :app:createDebugCompatibleScreenManifests
 > Task :app:generateDebugResources
-> Task :app:checkDebugAarMetadata
+> Task :app:javaPreCompileDebug
 > Task :app:mapDebugSourceSetPaths
+> Task :app:extractDeepLinksDebug
+> Task :app:packageDebugResources
+> Task :app:checkDebugAarMetadata
+> Task :app:mergeDebugShaders
 > Task :app:compileDebugShaders NO-SOURCE
 > Task :app:generateDebugAssets UP-TO-DATE
-> Task :app:packageDebugResources
 > Task :app:mergeDebugAssets
 > Task :app:compressDebugAssets
-> Task :app:processDebugMainManifest
-> Task :app:processDebugManifest
 > Task :app:parseDebugLocalResources
 > Task :app:desugarDebugFileDependencies
 > Task :app:mergeDebugStartupProfile
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
 > Task :app:processDebugManifestForPackage
-> Task :app:mergeDebugResources
-> Task :app:validateSigningDebug
-> Task :app:writeDebugAppMetadata
-> Task :app:writeDebugSigningConfigVersions
 > Task :app:mergeDebugJniLibFolders
 > Task :app:mergeDebugNativeLibs NO-SOURCE
 > Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
 > Task :app:checkDebugDuplicateClasses
+> Task :app:validateSigningDebug
+> Task :app:mergeDebugResources
 > Task :app:mergeLibDexDebug
 > Task :app:processDebugResources
 > Task :app:mergeExtDexDebug
+
 > Task :app:compileDebugKotlin
+w: file:///home/runner/work/VibiShaver/VibiShaver/app/src/main/java/com/tdev/vibishaver/MainActivity.kt:59:22 'vibrate(LongArray!, Int): Unit' is deprecated. Deprecated in Java
+
 > Task :app:compileDebugJavaWithJavac NO-SOURCE
 > Task :app:processDebugJavaRes
 > Task :app:dexBuilderDebug
@@ -54,6 +57,6 @@ Calculating task graph as no cached configuration is available for tasks: assemb
 > Task :app:assembleDebug
 > Task :app:createDebugApkListingFileRedirect
 
-BUILD SUCCESSFUL in 57s
+BUILD SUCCESSFUL in 58s
 34 actionable tasks: 34 executed
 Configuration cache entry stored.
