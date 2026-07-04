@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
@@ -15,11 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private var isRunning = false
-    private var vibrationThread: Thread? = null
     private lateinit var vibrator: Vibrator
+    private var powerLevel = 3
 
-    // Güç seviyeleri: 1-5 arası, her seviyede farklı frekans ve amplitude
-    private var powerLevel = 3  // default orta
+    private val amplitudes = intArrayOf(60, 110, 170, 220, 255)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +37,18 @@ class MainActivity : AppCompatActivity() {
         val tvStatus = findViewById<TextView>(R.id.tvStatus)
         val tvPowerNumber = findViewById<TextView>(R.id.tvPowerNumber)
 
-        seekBarPower.max = 4  // 0-4 = 5 seviye
-        seekBarPower.progress = 2  // default 3. seviye
+        seekBarPower.max = 4
+        seekBarPower.progress = 2
         tvPowerNumber.text = "3"
+        tvPowerLabel.text = "Orta"
 
         seekBarPower.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 powerLevel = progress + 1
                 tvPowerNumber.text = powerLevel.toString()
-                val labels = arrayOf("Çok Hafif", "Hafif", "Orta", "Güçlü", "Maksimum")
+                val labels = arrayOf("Hafif", "Dusuk", "Orta", "Guclu", "Maksimum")
                 tvPowerLabel.text = labels[progress]
-                if (isRunning) {
-                    restartVibration()
-                }
+                if (isRunning) restartVibration()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -60,53 +57,29 @@ class MainActivity : AppCompatActivity() {
         btnShaver.setOnClickListener {
             if (isRunning) {
                 stopShaver()
-                tvStatus.text = "Kapalı"
-                btnShaver.alpha = 0.6f
+                tvStatus.text = "Kapali"
+                btnShaver.alpha = 0.5f
             } else {
                 startShaver()
-                tvStatus.text = "Çalışıyor..."
+                tvStatus.text = "Calisiyor"
                 btnShaver.alpha = 1.0f
             }
         }
     }
 
-    private fun getVibrationPattern(): Pair<LongArray, IntArray> {
-        // Her seviyede farklı titreşim deseni
-        return when (powerLevel) {
-            1 -> Pair(
-                longArrayOf(0, 50, 150, 50),   // çok hafif - uzun aralar
-                intArrayOf(0, 80, 0, 80)
-            )
-            2 -> Pair(
-                longArrayOf(0, 60, 100, 60),
-                intArrayOf(0, 120, 0, 120)
-            )
-            3 -> Pair(
-                longArrayOf(0, 70, 60, 70),
-                intArrayOf(0, 170, 0, 170)
-            )
-            4 -> Pair(
-                longArrayOf(0, 80, 30, 80),
-                intArrayOf(0, 210, 0, 210)
-            )
-            5 -> Pair(
-                longArrayOf(0, 100, 10, 100),  // maksimum - neredeyse sürekli
-                intArrayOf(0, 255, 0, 255)
-            )
-            else -> Pair(longArrayOf(0, 70, 60, 70), intArrayOf(0, 170, 0, 170))
-        }
-    }
-
     private fun startShaver() {
         isRunning = true
-        val (pattern, amplitudes) = getVibrationPattern()
-
+        val amp = amplitudes[powerLevel - 1]
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val effect = VibrationEffect.createWaveform(pattern, amplitudes, 0)
+            val effect = VibrationEffect.createWaveform(
+                longArrayOf(0, 500),
+                intArrayOf(0, amp),
+                1
+            )
             vibrator.vibrate(effect)
         } else {
             @Suppress("DEPRECATION")
-            vibrator.vibrate(pattern, 0)
+            vibrator.vibrate(longArrayOf(0, 500), 1)
         }
     }
 
@@ -117,14 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun restartVibration() {
         vibrator.cancel()
-        val (pattern, amplitudes) = getVibrationPattern()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val effect = VibrationEffect.createWaveform(pattern, amplitudes, 0)
-            vibrator.vibrate(effect)
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(pattern, 0)
-        }
+        startShaver()
     }
 
     override fun onDestroy() {
