@@ -16,33 +16,33 @@ Calculating task graph as no cached configuration is available for tasks: assemb
 > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
 > Task :app:createDebugCompatibleScreenManifests
 > Task :app:generateDebugResValues
-> Task :app:mergeDebugShaders
 > Task :app:javaPreCompileDebug
-> Task :app:extractDeepLinksDebug
 > Task :app:generateDebugResources
+> Task :app:mergeDebugShaders
 > Task :app:mapDebugSourceSetPaths
 > Task :app:checkDebugAarMetadata
 > Task :app:compileDebugShaders NO-SOURCE
+> Task :app:extractDeepLinksDebug
 > Task :app:generateDebugAssets UP-TO-DATE
 > Task :app:packageDebugResources
-> Task :app:processDebugMainManifest
-> Task :app:processDebugManifest
-> Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
 > Task :app:parseDebugLocalResources
 > Task :app:desugarDebugFileDependencies
 > Task :app:mergeDebugStartupProfile
-> Task :app:mergeDebugAssets
-> Task :app:compressDebugAssets
-> Task :app:mergeDebugJniLibFolders
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
 > Task :app:mergeDebugResources
+> Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugJniLibFolders
+> Task :app:checkDebugDuplicateClasses
+> Task :app:validateSigningDebug
 > Task :app:mergeDebugNativeLibs NO-SOURCE
 > Task :app:stripDebugDebugSymbols NO-SOURCE
 > Task :app:writeDebugAppMetadata
 > Task :app:writeDebugSigningConfigVersions
-> Task :app:checkDebugDuplicateClasses
-> Task :app:validateSigningDebug
-> Task :app:mergeLibDexDebug
 > Task :app:processDebugResources
+> Task :app:mergeLibDexDebug
 > Task :app:mergeExtDexDebug
 > Task :app:compileDebugKotlin
 > Task :app:compileDebugJavaWithJavac NO-SOURCE
@@ -54,6 +54,6 @@ Calculating task graph as no cached configuration is available for tasks: assemb
 > Task :app:assembleDebug
 > Task :app:createDebugApkListingFileRedirect
 
-BUILD SUCCESSFUL in 59s
+BUILD SUCCESSFUL in 1m 2s
 34 actionable tasks: 34 executed
 Configuration cache entry stored.
