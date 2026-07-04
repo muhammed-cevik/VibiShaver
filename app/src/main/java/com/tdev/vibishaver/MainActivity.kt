@@ -40,19 +40,23 @@ class MainActivity : AppCompatActivity() {
                 isRunning = true
                 tvStatus.text = "DIRRRTTT"
                 btnShaver.alpha = 1.0f
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    // Maksimum 255 amplitude, 0 bekleme, sonsuz tekrar
-                    val effect = VibrationEffect.createWaveform(
-                        longArrayOf(0, 1000),
-                        intArrayOf(0, 255),
-                        1
-                    )
-                    vibrator.vibrate(effect)
-                } else {
-                    @Suppress("DEPRECATION")
-                    vibrator.vibrate(longArrayOf(0, 1000), 1)
-                }
+                startMaxVibration()
             }
+        }
+    }
+
+    private fun startMaxVibration() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Her ms 255 - motorun fiziksel limitine kadar zorla
+            // 1ms açık, 0ms kapalı = %100 duty cycle, sonsuz tekrar
+            val timings = LongArray(200) { if (it == 0) 0L else 1L }
+            val amps    = IntArray(200)  { if (it == 0) 0  else 255 }
+            val effect = VibrationEffect.createWaveform(timings, amps, 1)
+            vibrator.vibrate(effect)
+        } else {
+            @Suppress("DEPRECATION")
+            val timings = LongArray(200) { if (it == 0) 0L else 1L }
+            vibrator.vibrate(timings, 1)
         }
     }
 
